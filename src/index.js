@@ -20,21 +20,28 @@ app.get("/about",(req, res)=>{
    });
 })
 app.get("/temp", (req, res)=>{
-   request(`http://api.openweathermap.org/data/2.5/weather?q=${req.query.name}&appid=dfa855b8dd4ab21007d7e72a0ad49eef&units=metric`).on("data",(chunk)=>{
-      const objdata=JSON.parse(chunk);
-      const arrdata=[objdata];
-      console.log(req.query.name);
-      res.render("temp.hbs",{
-         city :arrdata[0].name,
-         temp: arrdata[0].main.temp
-      });
-   })
-   .on("end",(err)=>{
-      if(err){
-         return console.log("error",err);
-         res.end();
-      }
-   })
+   if(req.query.name)
+   {
+      request(`http://api.openweathermap.org/data/2.5/weather?q=${req.query.name}&appid=dfa855b8dd4ab21007d7e72a0ad49eef&units=metric`).on("data",(chunk)=>{
+         const objdata=JSON.parse(chunk);
+         const arrdata=[objdata];
+         console.log(req.query.name);
+         res.render("temp.hbs",{
+            city :arrdata[0].name,
+            temp: arrdata[0].main.temp
+         });
+      })
+      .on("end",(err)=>{
+         if(err){
+            return console.log("error",err);
+            res.end();
+         }
+      })
+   }
+   else{
+      res.render('temp.hbs');
+   }
+   
  })
 
 app.listen(port,()=>
