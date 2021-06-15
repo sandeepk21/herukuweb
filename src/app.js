@@ -10,7 +10,7 @@ app.get("/", (req, res) =>{
    res.send("sandy stark");
 });
 app.get("/about", (req,res) =>{
-   res.send("<html><h1>hello from the about section</h1></html>");
+   res.send("<html><h1>hello from the about sections</h1></html>");
 });
 app.get("/temp", (req, res)=>{
   request("http://api.openweathermap.org/data/2.5/weather?q=lakhimpur&appid=dfa855b8dd4ab21007d7e72a0ad49eef").on("data",(chunk)=>{
